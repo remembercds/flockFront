@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$BUSINESS_NAME | Financial Services</title>
+<style>
+  :root {
+    --navy: #0a2540;
+    --navy-dark: #061829;
+    --gold: #c9a227;
+    --text: #1c2b3a;
+    --muted: #5b6b7c;
+    --bg: #f7f8fa;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+  }
+  a { color: inherit; text-decoration: none; }
+  header {
+    background: var(--navy);
+    color: #fff;
+  }
+  nav {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+  }
+  .brand { font-size: 20px; font-weight: 700; letter-spacing: 0.02em; }
+  .brand span { color: var(--gold); }
+  nav ul { list-style: none; display: flex; gap: 28px; font-size: 14px; }
+  nav ul a:hover { color: var(--gold); }
+  .hero {
+    background: linear-gradient(160deg, var(--navy) 0%, var(--navy-dark) 100%);
+    color: #fff;
+    padding: 90px 24px 110px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 42px;
+    max-width: 720px;
+    margin: 0 auto 18px;
+    font-weight: 700;
+  }
+  .hero p {
+    max-width: 560px;
+    margin: 0 auto 32px;
+    color: #cbd6e2;
+    font-size: 18px;
+  }
+  .btn {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy-dark);
+    font-weight: 700;
+    padding: 14px 32px;
+    border-radius: 4px;
+    font-size: 15px;
+  }
+  section { padding: 72px 24px; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  h2 { font-size: 28px; text-align: center; margin-bottom: 12px; }
+  .kicker {
+    text-align: center;
+    color: var(--gold);
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .subhead { text-align: center; color: var(--muted); max-width: 560px; margin: 0 auto 48px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; }
+  .card {
+    background: #fff;
+    border: 1px solid #e4e8ee;
+    border-top: 3px solid var(--gold);
+    border-radius: 6px;
+    padding: 28px 24px;
+  }
+  .card h3 { font-size: 18px; margin-bottom: 10px; }
+  .card p { color: var(--muted); font-size: 14px; }
+  .about { background: #fff; }
+  .about .wrap { max-width: 760px; text-align: center; }
+  .about p { color: var(--muted); font-size: 16px; }
+  .contact {
+    background: var(--navy);
+    color: #fff;
+    text-align: center;
+  }
+  .contact h2 { color: #fff; }
+  .contact p { color: #cbd6e2; margin-bottom: 28px; }
+  footer {
+    background: var(--navy-dark);
+    color: #93a3b3;
+    text-align: center;
+    padding: 28px 24px;
+    font-size: 13px;
+  }
+  @media (max-width: 600px) {
+    nav { flex-direction: column; align-items: flex-start; gap: 12px; }
+    nav ul { flex-wrap: wrap; gap: 16px 24px; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="brand">$BUSINESS_NAME<span>.</span></div>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h1>$BUSINESS_NAME</h1>
+    <p>$TAGLINE</p>
+    <a class="btn" href="#contact">Schedule a Consultation</a>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="kicker">What We Do</div>
+      <h2>Financial Services Built Around You</h2>
+      <p class="subhead">Straightforward advice and disciplined strategy, tailored to your goals at every stage of life.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Wealth Management</h3>
+          <p>Personalized portfolio strategy designed to grow and protect what you've built.</p>
+        </div>
+        <div class="card">
+          <h3>Retirement Planning</h3>
+          <p>A clear roadmap to retire on your terms, with income that lasts.</p>
+        </div>
+        <div class="card">
+          <h3>Investment Advisory</h3>
+          <p>Data-driven guidance across markets, risk levels, and time horizons.</p>
+        </div>
+        <div class="card">
+          <h3>Tax Strategy</h3>
+          <p>Proactive planning to help you keep more of what you earn.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="kicker">About Us</div>
+      <h2>Trusted Financial Guidance</h2>
+      <p>$BUSINESS_NAME was built on a simple idea: financial advice should be clear, honest, and centered on your goals — not ours. Our advisors work with individuals, families, and business owners to build strategies that hold up in any market.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="kicker">Get In Touch</div>
+      <h2>Let's Talk About Your Future</h2>
+      <p>Reach out at info@$DOMAIN to schedule a no-obligation consultation.</p>
+      <a class="btn" href="mailto:info@$DOMAIN">Contact $BUSINESS_NAME</a>
+    </div>
+  </section>
+
+  <footer>
+    &copy; $YEAR $BUSINESS_NAME. All rights reserved.
+  </footer>
+</body>
+</html>

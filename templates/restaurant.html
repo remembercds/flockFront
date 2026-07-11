@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$BUSINESS_NAME | Restaurant</title>
+<style>
+  :root {
+    --near-black: #1a1210;
+    --near-black-2: #120c0a;
+    --ember: #c1440e;
+    --gold: #e0a94a;
+    --text: #241b16;
+    --muted: #7a6a5f;
+    --cream: #faf5ee;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--text);
+    background: var(--cream);
+    line-height: 1.6;
+  }
+  a { color: inherit; text-decoration: none; }
+  header { background: var(--near-black); color: #fff; }
+  nav {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+  }
+  .brand { font-size: 22px; font-weight: 700; letter-spacing: 0.02em; }
+  .brand span { color: var(--gold); }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  nav ul a:hover { color: var(--gold); }
+  .hero {
+    background: linear-gradient(160deg, var(--near-black) 0%, var(--near-black-2) 100%);
+    color: #fff;
+    padding: 90px 24px 110px;
+    text-align: center;
+  }
+  .hero h1 { font-size: 44px; max-width: 720px; margin: 0 auto 18px; font-weight: 700; }
+  .hero p {
+    max-width: 560px;
+    margin: 0 auto 32px;
+    color: #e6d9c8;
+    font-size: 18px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  .btn {
+    display: inline-block;
+    background: var(--ember);
+    color: #fff;
+    font-weight: 700;
+    padding: 14px 32px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  section { padding: 72px 24px; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  h2 { font-size: 30px; text-align: center; margin-bottom: 12px; color: var(--near-black); }
+  .kicker {
+    text-align: center;
+    color: var(--ember);
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  .subhead {
+    text-align: center;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto 48px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; }
+  .card {
+    background: #fff;
+    border-radius: 6px;
+    padding: 28px 24px;
+    border-top: 3px solid var(--gold);
+  }
+  .card h3 { font-size: 19px; margin-bottom: 10px; }
+  .card p {
+    color: var(--muted);
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  .about { background: #fff; }
+  .about .wrap { max-width: 760px; text-align: center; }
+  .about p {
+    color: var(--muted);
+    font-size: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  .contact { background: var(--near-black-2); color: #fff; text-align: center; }
+  .contact h2 { color: #fff; }
+  .contact p {
+    color: #e6d9c8;
+    margin-bottom: 28px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  footer {
+    background: var(--near-black);
+    color: #b7a996;
+    text-align: center;
+    padding: 28px 24px;
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  @media (max-width: 600px) {
+    nav { flex-direction: column; align-items: flex-start; gap: 12px; }
+    nav ul { flex-wrap: wrap; gap: 16px 24px; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="brand">$BUSINESS_NAME<span> &middot;</span></div>
+      <ul>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Reservations</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h1>$BUSINESS_NAME</h1>
+    <p>$TAGLINE</p>
+    <a class="btn" href="#contact">Reserve a Table</a>
+  </div>
+
+  <section id="menu">
+    <div class="wrap">
+      <div class="kicker">What We're Known For</div>
+      <h2>A Menu Worth Coming Back For</h2>
+      <p class="subhead">Fresh, seasonal ingredients and dishes made with care, served in a room that feels like home.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Starters</h3>
+          <p>Small plates built to share, packed with bold, fresh flavor.</p>
+        </div>
+        <div class="card">
+          <h3>Entrees</h3>
+          <p>Hearty, chef-driven mains made from locally sourced ingredients.</p>
+        </div>
+        <div class="card">
+          <h3>Desserts</h3>
+          <p>House-made sweets that are the perfect way to end the meal.</p>
+        </div>
+        <div class="card">
+          <h3>Chef's Specials</h3>
+          <p>Rotating seasonal dishes you won't find anywhere else.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="kicker">Our Story</div>
+      <h2>Made With Care, Served With Pride</h2>
+      <p>$BUSINESS_NAME started with a simple goal: bring people together over great food. Every dish on our menu is made in-house, using fresh ingredients and recipes we're proud to put our name on.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="kicker">Reservations</div>
+      <h2>Save Your Table</h2>
+      <p>Reach us at reservations@$DOMAIN to book a table or ask about private events.</p>
+      <a class="btn" href="mailto:reservations@$DOMAIN">Contact $BUSINESS_NAME</a>
+    </div>
+  </section>
+
+  <footer>
+    &copy; $YEAR $BUSINESS_NAME. All rights reserved.
+  </footer>
+</body>
+</html>

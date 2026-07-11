@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$BUSINESS_NAME | Real Estate</title>
+<style>
+  :root {
+    --green: #1f4d3d;
+    --green-dark: #143229;
+    --terracotta: #c1662f;
+    --cream: #f5f1e8;
+    --text: #241f18;
+    --muted: #6b6154;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--text);
+    background: #fff;
+    line-height: 1.6;
+  }
+  a { color: inherit; text-decoration: none; }
+  header { background: #fff; border-bottom: 1px solid #ece6d8; }
+  nav {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+  }
+  .brand { font-size: 20px; font-weight: 700; color: var(--green-dark); }
+  .brand span { color: var(--terracotta); }
+  nav ul { list-style: none; display: flex; gap: 28px; font-size: 14px; }
+  nav ul a:hover { color: var(--green); }
+  .hero {
+    background: var(--cream);
+    padding: 90px 24px 100px;
+    text-align: center;
+  }
+  .hero h1 { font-size: 42px; max-width: 720px; margin: 0 auto 18px; font-weight: 700; color: var(--green-dark); }
+  .hero p { max-width: 560px; margin: 0 auto 32px; color: var(--muted); font-size: 18px; }
+  .btn {
+    display: inline-block;
+    background: var(--terracotta);
+    color: #fff;
+    font-weight: 700;
+    padding: 14px 32px;
+    border-radius: 4px;
+    font-size: 15px;
+  }
+  section { padding: 72px 24px; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  h2 { font-size: 28px; text-align: center; margin-bottom: 12px; color: var(--green-dark); }
+  .kicker {
+    text-align: center;
+    color: var(--terracotta);
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .subhead { text-align: center; color: var(--muted); max-width: 560px; margin: 0 auto 48px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; }
+  .card {
+    background: var(--cream);
+    border-radius: 8px;
+    padding: 28px 24px;
+    border-top: 3px solid var(--green);
+  }
+  .card h3 { font-size: 18px; margin-bottom: 10px; color: var(--green-dark); }
+  .card p { color: var(--muted); font-size: 14px; }
+  .about .wrap { max-width: 760px; text-align: center; }
+  .about p { color: var(--muted); font-size: 16px; }
+  .contact { background: var(--green-dark); color: #fff; text-align: center; }
+  .contact h2 { color: #fff; }
+  .contact p { color: #d6e2db; margin-bottom: 28px; }
+  footer {
+    background: #fff;
+    border-top: 1px solid #ece6d8;
+    color: var(--muted);
+    text-align: center;
+    padding: 28px 24px;
+    font-size: 13px;
+  }
+  @media (max-width: 600px) {
+    nav { flex-direction: column; align-items: flex-start; gap: 12px; }
+    nav ul { flex-wrap: wrap; gap: 16px 24px; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="brand">$BUSINESS_NAME<span> Realty</span></div>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h1>$BUSINESS_NAME</h1>
+    <p>$TAGLINE</p>
+    <a class="btn" href="#contact">Request a Showing</a>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="kicker">What We Do</div>
+      <h2>Real Estate, Done Right</h2>
+      <p class="subhead">Local expertise and honest guidance, whether you're buying your first home or growing a property portfolio.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Buying</h3>
+          <p>Find the right property with an agent who knows the neighborhood inside and out.</p>
+        </div>
+        <div class="card">
+          <h3>Selling</h3>
+          <p>Get your home in front of the right buyers with a strategy built to close.</p>
+        </div>
+        <div class="card">
+          <h3>Property Management</h3>
+          <p>Hands-off ownership with reliable, responsive property management.</p>
+        </div>
+        <div class="card">
+          <h3>Market Analysis</h3>
+          <p>Data-backed pricing and market insight so you always know where you stand.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="kicker">About Us</div>
+      <h2>Local Knowledge, Real Results</h2>
+      <p>$BUSINESS_NAME is a team of local agents who believe real estate should be personal, transparent, and stress-free. From your first walkthrough to closing day, we're with you every step of the way.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="kicker">Get In Touch</div>
+      <h2>Let's Find Your Next Place</h2>
+      <p>Reach our team at info@$DOMAIN to schedule a showing or get a free home valuation.</p>
+      <a class="btn" href="mailto:info@$DOMAIN">Contact $BUSINESS_NAME</a>
+    </div>
+  </section>
+
+  <footer>
+    &copy; $YEAR $BUSINESS_NAME. All rights reserved.
+  </footer>
+</body>
+</html>

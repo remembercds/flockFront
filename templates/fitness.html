@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$BUSINESS_NAME | Fitness</title>
+<style>
+  :root {
+    --black: #0d0d0d;
+    --black-2: #000000;
+    --volt: #c6ff1f;
+    --text: #16171a;
+    --muted: #6b6f76;
+    --bg: #f5f5f6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+  }
+  a { color: inherit; text-decoration: none; }
+  header { background: var(--black-2); color: #fff; }
+  nav {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+  }
+  .brand { font-size: 20px; font-weight: 800; letter-spacing: 0.03em; text-transform: uppercase; }
+  .brand span { color: var(--volt); }
+  nav ul { list-style: none; display: flex; gap: 28px; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
+  nav ul a:hover { color: var(--volt); }
+  .hero {
+    background: linear-gradient(160deg, var(--black) 0%, var(--black-2) 100%);
+    color: #fff;
+    padding: 90px 24px 110px;
+    text-align: center;
+  }
+  .hero h1 { font-size: 46px; max-width: 720px; margin: 0 auto 18px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.01em; }
+  .hero p { max-width: 560px; margin: 0 auto 32px; color: #cfd2d8; font-size: 18px; }
+  .btn {
+    display: inline-block;
+    background: var(--volt);
+    color: #0d0d0d;
+    font-weight: 800;
+    padding: 14px 32px;
+    border-radius: 2px;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  section { padding: 72px 24px; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  h2 { font-size: 28px; text-align: center; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.01em; }
+  .kicker {
+    text-align: center;
+    color: #9aa000;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .subhead { text-align: center; color: var(--muted); max-width: 560px; margin: 0 auto 48px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; }
+  .card {
+    background: var(--black-2);
+    color: #fff;
+    border-radius: 4px;
+    padding: 28px 24px;
+    border-top: 3px solid var(--volt);
+  }
+  .card h3 { font-size: 18px; margin-bottom: 10px; text-transform: uppercase; }
+  .card p { color: #b9bcc3; font-size: 14px; }
+  .about .wrap { max-width: 760px; text-align: center; }
+  .about p { color: var(--muted); font-size: 16px; }
+  .contact { background: var(--black); color: #fff; text-align: center; }
+  .contact h2 { color: #fff; }
+  .contact p { color: #cfd2d8; margin-bottom: 28px; }
+  footer {
+    background: var(--black-2);
+    color: #8b8e94;
+    text-align: center;
+    padding: 28px 24px;
+    font-size: 13px;
+  }
+  @media (max-width: 600px) {
+    nav { flex-direction: column; align-items: flex-start; gap: 12px; }
+    nav ul { flex-wrap: wrap; gap: 16px 24px; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="brand">$BUSINESS_NAME<span>.</span></div>
+      <ul>
+        <li><a href="#programs">Programs</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Join</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h1>$BUSINESS_NAME</h1>
+    <p>$TAGLINE</p>
+    <a class="btn" href="#contact">Start Your Free Trial</a>
+  </div>
+
+  <section id="programs">
+    <div class="wrap">
+      <div class="kicker">Train With Us</div>
+      <h2>Programs For Every Goal</h2>
+      <p class="subhead">Whatever you're training for, we've got a program, a coach, and a community to help you get there.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Strength Training</h3>
+          <p>Build real strength with programming designed to progress week over week.</p>
+        </div>
+        <div class="card">
+          <h3>Group Classes</h3>
+          <p>High-energy classes that make showing up the easiest part of your day.</p>
+        </div>
+        <div class="card">
+          <h3>Personal Training</h3>
+          <p>One-on-one coaching built entirely around your goals and schedule.</p>
+        </div>
+        <div class="card">
+          <h3>Nutrition Coaching</h3>
+          <p>Practical nutrition guidance to back up the work you're putting in.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="kicker">About Us</div>
+      <h2>Results-Driven. Community-Backed.</h2>
+      <p>$BUSINESS_NAME was built for people who are serious about their goals but want a coach and a community in their corner. Real programming, real coaching, real results.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="kicker">Get Started</div>
+      <h2>Your First Class Is On Us</h2>
+      <p>Reach out at join@$DOMAIN to claim your free trial and tour the gym.</p>
+      <a class="btn" href="mailto:join@$DOMAIN">Contact $BUSINESS_NAME</a>
+    </div>
+  </section>
+
+  <footer>
+    &copy; $YEAR $BUSINESS_NAME. All rights reserved.
+  </footer>
+</body>
+</html>

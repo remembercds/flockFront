@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$BUSINESS_NAME | Education</title>
+<style>
+  :root {
+    --blue: #1d4ed8;
+    --blue-dark: #142e8c;
+    --orange: #f97316;
+    --bg: #f5f7ff;
+    --text: #1a2033;
+    --muted: #5b6478;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--text);
+    background: #fff;
+    line-height: 1.6;
+  }
+  a { color: inherit; text-decoration: none; }
+  header {
+    background: #fff;
+    border-bottom: 1px solid #e7e9f5;
+  }
+  nav {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+  }
+  .brand { font-size: 20px; font-weight: 700; color: var(--blue-dark); }
+  .brand span { color: var(--orange); }
+  nav ul { list-style: none; display: flex; gap: 28px; font-size: 14px; }
+  nav ul a:hover { color: var(--blue); }
+  .hero {
+    background: linear-gradient(160deg, var(--blue) 0%, var(--blue-dark) 100%);
+    color: #fff;
+    padding: 90px 24px 110px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 42px;
+    max-width: 720px;
+    margin: 0 auto 18px;
+    font-weight: 700;
+  }
+  .hero p {
+    max-width: 560px;
+    margin: 0 auto 32px;
+    color: #dbe3ff;
+    font-size: 18px;
+  }
+  .btn {
+    display: inline-block;
+    background: var(--orange);
+    color: #fff;
+    font-weight: 700;
+    padding: 14px 32px;
+    border-radius: 4px;
+    font-size: 15px;
+  }
+  section { padding: 72px 24px; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  h2 { font-size: 28px; text-align: center; margin-bottom: 12px; color: var(--blue-dark); }
+  .kicker {
+    text-align: center;
+    color: var(--orange);
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .subhead { text-align: center; color: var(--muted); max-width: 560px; margin: 0 auto 48px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; }
+  .card {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 28px 24px;
+    border-top: 3px solid var(--blue);
+  }
+  .card h3 { font-size: 18px; margin-bottom: 10px; color: var(--blue-dark); }
+  .card p { color: var(--muted); font-size: 14px; }
+  .about .wrap { max-width: 760px; text-align: center; }
+  .about p { color: var(--muted); font-size: 16px; }
+  .contact {
+    background: var(--blue-dark);
+    color: #fff;
+    text-align: center;
+  }
+  .contact h2 { color: #fff; }
+  .contact p { color: #dbe3ff; margin-bottom: 28px; }
+  footer {
+    background: #fff;
+    border-top: 1px solid #e7e9f5;
+    color: var(--muted);
+    text-align: center;
+    padding: 28px 24px;
+    font-size: 13px;
+  }
+  @media (max-width: 600px) {
+    nav { flex-direction: column; align-items: flex-start; gap: 12px; }
+    nav ul { flex-wrap: wrap; gap: 16px 24px; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="brand">$BUSINESS_NAME<span>.</span></div>
+      <ul>
+        <li><a href="#programs">Programs</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h1>$BUSINESS_NAME</h1>
+    <p>$TAGLINE</p>
+    <a class="btn" href="#contact">Request Info</a>
+  </div>
+
+  <section id="programs">
+    <div class="wrap">
+      <div class="kicker">Our Programs</div>
+      <h2>Learning Paths For Every Stage</h2>
+      <p class="subhead">Engaging, well-structured programs designed to help every student build confidence and skills.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Early Learning</h3>
+          <p>A strong foundation in literacy, numeracy, and curiosity for young learners.</p>
+        </div>
+        <div class="card">
+          <h3>K-12 Enrichment</h3>
+          <p>Subject support and enrichment that keeps pace with classroom curriculum.</p>
+        </div>
+        <div class="card">
+          <h3>Test Prep</h3>
+          <p>Focused, results-driven prep for standardized tests and college admissions.</p>
+        </div>
+        <div class="card">
+          <h3>Online Courses</h3>
+          <p>Flexible, self-paced courses that fit around busy schedules.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="kicker">About Us</div>
+      <h2>Empowering Every Learner</h2>
+      <p>$BUSINESS_NAME is built around a simple belief: every student can succeed with the right guidance. Our instructors combine proven teaching methods with genuine encouragement to help students grow academically and personally.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="kicker">Get In Touch</div>
+      <h2>Ready To Get Started?</h2>
+      <p>Reach our admissions team at admissions@$DOMAIN to learn more.</p>
+      <a class="btn" href="mailto:admissions@$DOMAIN">Contact $BUSINESS_NAME</a>
+    </div>
+  </section>
+
+  <footer>
+    &copy; $YEAR $BUSINESS_NAME. All rights reserved.
+  </footer>
+</body>
+</html>

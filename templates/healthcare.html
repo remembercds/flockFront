@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$BUSINESS_NAME | Healthcare</title>
+<style>
+  :root {
+    --teal: #0f766e;
+    --teal-dark: #0b544e;
+    --sand: #f2f7f6;
+    --text: #1b2b2a;
+    --muted: #5a6d6b;
+    --accent: #38b6a6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--text);
+    background: #fff;
+    line-height: 1.6;
+  }
+  a { color: inherit; text-decoration: none; }
+  header {
+    background: #fff;
+    border-bottom: 1px solid #e6efed;
+  }
+  nav {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+  }
+  .brand { font-size: 20px; font-weight: 700; color: var(--teal-dark); }
+  .brand span { color: var(--accent); }
+  nav ul { list-style: none; display: flex; gap: 28px; font-size: 14px; }
+  nav ul a:hover { color: var(--teal); }
+  .hero {
+    background: var(--sand);
+    padding: 90px 24px 100px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 42px;
+    max-width: 720px;
+    margin: 0 auto 18px;
+    font-weight: 700;
+    color: var(--teal-dark);
+  }
+  .hero p {
+    max-width: 560px;
+    margin: 0 auto 32px;
+    color: var(--muted);
+    font-size: 18px;
+  }
+  .btn {
+    display: inline-block;
+    background: var(--teal);
+    color: #fff;
+    font-weight: 700;
+    padding: 14px 32px;
+    border-radius: 30px;
+    font-size: 15px;
+  }
+  section { padding: 72px 24px; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  h2 { font-size: 28px; text-align: center; margin-bottom: 12px; color: var(--teal-dark); }
+  .kicker {
+    text-align: center;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .subhead { text-align: center; color: var(--muted); max-width: 560px; margin: 0 auto 48px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; }
+  .card {
+    background: var(--sand);
+    border-radius: 10px;
+    padding: 28px 24px;
+    border-top: 3px solid var(--accent);
+  }
+  .card h3 { font-size: 18px; margin-bottom: 10px; color: var(--teal-dark); }
+  .card p { color: var(--muted); font-size: 14px; }
+  .about .wrap { max-width: 760px; text-align: center; }
+  .about p { color: var(--muted); font-size: 16px; }
+  .contact {
+    background: var(--teal-dark);
+    color: #fff;
+    text-align: center;
+  }
+  .contact h2 { color: #fff; }
+  .contact p { color: #d3e6e3; margin-bottom: 28px; }
+  .contact .btn { background: #fff; color: var(--teal-dark); }
+  footer {
+    background: #fff;
+    border-top: 1px solid #e6efed;
+    color: var(--muted);
+    text-align: center;
+    padding: 28px 24px;
+    font-size: 13px;
+  }
+  @media (max-width: 600px) {
+    nav { flex-direction: column; align-items: flex-start; gap: 12px; }
+    nav ul { flex-wrap: wrap; gap: 16px 24px; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="brand">$BUSINESS_NAME<span>+</span></div>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h1>$BUSINESS_NAME</h1>
+    <p>$TAGLINE</p>
+    <a class="btn" href="#contact">Book an Appointment</a>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="kicker">Our Services</div>
+      <h2>Care Centered On You</h2>
+      <p class="subhead">From routine checkups to specialist care, our team is here to support your health at every stage.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>Primary Care</h3>
+          <p>Comprehensive checkups and ongoing care from a provider who knows you.</p>
+        </div>
+        <div class="card">
+          <h3>Specialist Referrals</h3>
+          <p>Fast access to a trusted network of specialists when you need them.</p>
+        </div>
+        <div class="card">
+          <h3>Telehealth Visits</h3>
+          <p>Talk to a provider from home for many common concerns and follow-ups.</p>
+        </div>
+        <div class="card">
+          <h3>Preventive Screenings</h3>
+          <p>Stay ahead of health issues with regular, evidence-based screenings.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="kicker">About Us</div>
+      <h2>Compassionate, Local Care</h2>
+      <p>$BUSINESS_NAME brings together experienced clinicians and a friendly care team focused on one thing: helping you and your family feel your best. We combine modern medicine with the kind of personal attention that's hard to find these days.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="kicker">Get In Touch</div>
+      <h2>Schedule Your Visit</h2>
+      <p>Reach our care team at appointments@$DOMAIN to book your next visit.</p>
+      <a class="btn" href="mailto:appointments@$DOMAIN">Contact $BUSINESS_NAME</a>
+    </div>
+  </section>
+
+  <footer>
+    &copy; $YEAR $BUSINESS_NAME. All rights reserved.
+  </footer>
+</body>
+</html>

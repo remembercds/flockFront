@@ -68,6 +68,23 @@ INDUSTRY_TAGLINES = {
 CLAUDE_MODEL = "claude-opus-4-8"
 GEMINI_MODEL = "gemini-3.5-flash"
 
+BANNER = r"""
+              ,;;;;;;;,
+            ;;;;;;;;;;;;;
+           ;;;()    ()~;;
+            ;;(   ..   )~;;
+             ';;;;;;;;;;;'
+               )   ||   (
+              (____||____)
+
+                flockFront
+     ~ herding your domain into a website ~
+"""
+
+
+def print_banner():
+    print(BANNER, file=sys.stderr)
+
 
 class CloudflareError(Exception):
     pass
@@ -338,6 +355,8 @@ def main():
     parser.add_argument("--account-id", default=os.environ.get("CLOUDFLARE_ACCOUNT_ID"),
                          help="Cloudflare account ID (or set CLOUDFLARE_ACCOUNT_ID)")
     args = parser.parse_args()
+
+    print_banner()
 
     if args.token:
         args.token = args.token.strip()

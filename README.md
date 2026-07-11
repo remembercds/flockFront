@@ -83,6 +83,8 @@ export CLOUDFLARE_API_TOKEN=your-token-here
 
 (On Windows PowerShell: `$env:CLOUDFLARE_API_TOKEN = "your-token-here"`)
 
+Prefer the environment variable over `--token`/`--ai-key` on the command line — either still works, but flockFront prints a warning when you pass a secret inline, since it then sits in your shell history and is visible to anyone who can list processes on the machine.
+
 ### 3. Your Cloudflare account ID (only if you have multiple accounts)
 
 If your API token can only see one Cloudflare account, flockFront finds it
@@ -168,6 +170,28 @@ Or pass the key directly with `--ai-key` instead of an environment variable.
 - **Gemini** talks to the API directly over HTTP — no extra install needed.
 
 If the model's response isn't a complete HTML document (e.g. it refused, or returned something unexpected), flockFront reports an error for that domain instead of deploying broken output.
+
+### Previewing without deploying
+
+Pass `--dry-run` to render the site to a local `<script-name>.preview.html` file instead of touching Cloudflare at all — no token required:
+
+```
+python flockFront.py sunrise-wealth.com --dry-run -i legal
+python flockFront.py sunrise-wealth.com --ai claude --ai-key sk-ant-... --dry-run
+```
+
+Useful for checking AI-generated output (which is non-deterministic) or iterating on a template before spending an actual deploy. `*.preview.html` is gitignored.
+
+### Listing and deleting deployments
+
+```
+python flockFront.py --list
+python flockFront.py --delete sunrise-wealth.com other-domain.com
+```
+
+`--list` enumerates every Worker script whose name starts with `flockfront-` on the account, resolving each to its live URL (custom domain if attached, otherwise its `*.workers.dev` address) and last-modified time.
+
+`--delete` detaches the Workers Custom Domain (if any) and deletes the underlying Worker script for each domain given — this is a real teardown, not reversible. Both flags exit immediately after running and ignore `domain`/`--industry`/`--ai`.
 
 ## Troubleshooting
 

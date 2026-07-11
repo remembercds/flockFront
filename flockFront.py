@@ -35,9 +35,13 @@ Usage:
   python flockFront.py --domains-file domains.txt -i legal  # domains from a file
   python flockFront.py example.com --ai claude --ai-key sk-ant-...
   python flockFront.py example.com --ai gemini               # uses GEMINI_API_KEY
+  python flockFront.py example.com --dry-run -i legal        # render locally, skip Cloudflare
+  python flockFront.py --list                                # list every flockFront deployment
+  python flockFront.py --delete example.com other.com        # tear down deployment(s)
 
 Output:
-  Prints the live URL for each domain once its site is deployed.
+  Prints the live URL for each domain once its site is deployed (or the local
+  file:// path with --dry-run).
 """
 
 import argparse
@@ -300,6 +304,49 @@ def publish_on_workers_dev(account_id, script_name, token):
     return f"https://{script_name}.{subdomain['subdomain']}.workers.dev"
 
 
+FLOCKFRONT_PREFIX = "flockfront-"
+
+
+def list_deployments(account_id, token):
+    scripts = cf_request("GET", f"/accounts/{account_id}/workers/scripts", token)
+    ours = [s for s in scripts if s["id"].startswith(FLOCKFRONT_PREFIX)]
+    if not ours:
+        return []
+
+    domains = cf_request("GET", f"/accounts/{account_id}/workers/domains", token)
+    hostname_by_service = {
+        d["service"]: d["hostname"] for d in domains if d["service"].startswith(FLOCKFRONT_PREFIX)
+    }
+
+    workers_subdomain = None
+    results = []
+    for s in ours:
+        name = s["id"]
+        hostname = hostname_by_service.get(name)
+        if hostname:
+            url = f"https://{hostname}"
+        else:
+            if workers_subdomain is None:
+                sub = cf_request("GET", f"/accounts/{account_id}/workers/subdomain", token)
+                workers_subdomain = sub["subdomain"]
+            url = f"https://{name}.{workers_subdomain}.workers.dev"
+        results.append((name, url, s.get("modified_on", "")))
+    return results
+
+
+def delete_deployment(domain, account_id, token):
+    domain = validate_domain(domain)
+    script_name = f"{FLOCKFRONT_PREFIX}{slugify(domain)}"[:63]
+
+    domains = cf_request("GET", f"/accounts/{account_id}/workers/domains", token)
+    match = next((d for d in domains if d["hostname"] == domain), None)
+    if match:
+        cf_request("DELETE", f"/accounts/{account_id}/workers/domains/{match['id']}", token)
+
+    cf_request("DELETE", f"/accounts/{account_id}/workers/scripts/{script_name}", token)
+    return script_name
+
+
 def load_domains(args):
     domains = list(args.domain or [])
     if args.domains_file:
@@ -317,7 +364,7 @@ def load_domains(args):
 
 def deploy_one(domain, args, account_id):
     domain = validate_domain(domain)
-    script_name = f"flockfront-{slugify(domain)}"[:63]
+    script_name = f"{FLOCKFRONT_PREFIX}{slugify(domain)}"[:63]
 
     if args.ai:
         print(f"Generating {args.ai} website for {domain}...", file=sys.stderr)
@@ -325,6 +372,12 @@ def deploy_one(domain, args, account_id):
     else:
         print(f"Rendering {args.industry} template for {domain}...", file=sys.stderr)
         html = render_site_html(args.industry, domain)
+
+    if args.dry_run:
+        out_path = Path(f"{script_name}.preview.html").resolve()
+        out_path.write_text(html, encoding="utf-8")
+        return f"file://{out_path}"
+
     module_code = render_worker_module(html)
 
     print(f"Deploying Worker script '{script_name}'...", file=sys.stderr)
@@ -363,7 +416,23 @@ def main():
         default=None,
         help="API key for the chosen --ai provider (or set ANTHROPIC_API_KEY / GEMINI_API_KEY)",
     )
-    parser.add_argument("--token", default=os.environ.get("CLOUDFLARE_API_TOKEN"),
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Render the site to a local <script-name>.preview.html file instead of deploying to Cloudflare",
+    )
+    parser.add_argument(
+        "--list",
+        action="store_true",
+        help="List every flockFront deployment on the account and exit",
+    )
+    parser.add_argument(
+        "--delete",
+        nargs="+",
+        metavar="DOMAIN",
+        help="Delete the flockFront deployment(s) for the given domain(s) and exit",
+    )
+    parser.add_argument("--token", default=None,
                          help="Cloudflare API token (or set CLOUDFLARE_API_TOKEN)")
     parser.add_argument("--account-id", default=os.environ.get("CLOUDFLARE_ACCOUNT_ID"),
                          help="Cloudflare account ID (or set CLOUDFLARE_ACCOUNT_ID)")
@@ -372,35 +441,83 @@ def main():
     print_banner()
 
     if args.token:
+        print(
+            "Warning: passing --token on the command line leaves it in your shell history "
+            "and process list. Prefer setting CLOUDFLARE_API_TOKEN instead.",
+            file=sys.stderr,
+        )
         args.token = args.token.strip()
+    else:
+        args.token = os.environ.get("CLOUDFLARE_API_TOKEN", "").strip() or None
+
     if args.account_id:
         args.account_id = args.account_id.strip()
 
-    if not args.token:
+    if not args.token and not args.dry_run:
         print("Error: no Cloudflare API token. Pass --token or set CLOUDFLARE_API_TOKEN.", file=sys.stderr)
         sys.exit(1)
 
     if args.ai:
         env_var = "ANTHROPIC_API_KEY" if args.ai == "claude" else "GEMINI_API_KEY"
+        if args.ai_key:
+            print(
+                f"Warning: passing --ai-key on the command line leaves it in your shell history "
+                f"and process list. Prefer setting {env_var} instead.",
+                file=sys.stderr,
+            )
         args.ai_key = (args.ai_key or os.environ.get(env_var, "")).strip()
         if not args.ai_key:
             print(f"Error: no API key for --ai {args.ai}. Pass --ai-key or set {env_var}.", file=sys.stderr)
             sys.exit(1)
 
+    account_id = None
+    if args.list or args.delete or not args.dry_run:
+        try:
+            print("Resolving Cloudflare account...", file=sys.stderr)
+            account_id = get_account_id(args.token, args.account_id)
+        except CloudflareError as e:
+            print(f"Error: {e}", file=sys.stderr)
+            sys.exit(1)
+        except requests.RequestException as e:
+            print(f"Network error talking to Cloudflare API: {e}", file=sys.stderr)
+            sys.exit(1)
+
+    if args.list:
+        try:
+            deployments = list_deployments(account_id, args.token)
+        except CloudflareError as e:
+            print(f"Error: {e}", file=sys.stderr)
+            sys.exit(1)
+        except requests.RequestException as e:
+            print(f"Network error talking to Cloudflare API: {e}", file=sys.stderr)
+            sys.exit(1)
+        if not deployments:
+            print("No flockFront deployments found on this account.")
+        else:
+            print(f"{len(deployments)} flockFront deployment(s):")
+            for name, url, modified in deployments:
+                when = modified[:19].replace("T", " ") if modified else "unknown"
+                print(f"  {url}  ({name}, last modified {when})")
+        return
+
+    if args.delete:
+        failures = 0
+        for domain in args.delete:
+            try:
+                script_name = delete_deployment(domain, account_id, args.token)
+                print(f"Deleted {domain} (worker '{script_name}')")
+            except (CloudflareError, ValueError) as e:
+                print(f"Error deleting {domain}: {e}", file=sys.stderr)
+                failures += 1
+            except requests.RequestException as e:
+                print(f"Network error deleting {domain}: {e}", file=sys.stderr)
+                failures += 1
+        sys.exit(1 if failures else 0)
+
     try:
         domains = load_domains(args)
     except ValueError as e:
         print(f"Error: {e}", file=sys.stderr)
-        sys.exit(1)
-
-    try:
-        print("Resolving Cloudflare account...", file=sys.stderr)
-        account_id = get_account_id(args.token, args.account_id)
-    except CloudflareError as e:
-        print(f"Error: {e}", file=sys.stderr)
-        sys.exit(1)
-    except requests.RequestException as e:
-        print(f"Network error talking to Cloudflare API: {e}", file=sys.stderr)
         sys.exit(1)
 
     failures = 0

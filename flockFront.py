@@ -94,9 +94,13 @@ class AIGenerationError(Exception):
     pass
 
 
+REQUEST_TIMEOUT = (10, 60)  # (connect, read) seconds
+
+
 def cf_request(method, path, token, **kwargs):
     headers = kwargs.pop("headers", {})
     headers["Authorization"] = f"Bearer {token}"
+    kwargs.setdefault("timeout", REQUEST_TIMEOUT)
     resp = requests.request(method, f"{API_BASE}{path}", headers=headers, **kwargs)
     try:
         body = resp.json()
@@ -156,6 +160,9 @@ Requirements:
 """
 
 
+AI_TIMEOUT = 120  # seconds — generating a full page can take longer than a plain API call
+
+
 def call_claude(api_key, prompt):
     try:
         import anthropic
@@ -163,13 +170,15 @@ def call_claude(api_key, prompt):
         raise AIGenerationError(
             "The 'anthropic' package is required for --ai claude. Install it with: pip install anthropic"
         )
-    client = anthropic.Anthropic(api_key=api_key)
+    client = anthropic.Anthropic(api_key=api_key, timeout=AI_TIMEOUT)
     try:
         response = client.messages.create(
             model=CLAUDE_MODEL,
             max_tokens=8000,
             messages=[{"role": "user", "content": prompt}],
         )
+    except anthropic.APITimeoutError:
+        raise AIGenerationError(f"Claude API timed out after {AI_TIMEOUT}s")
     except anthropic.APIError as e:
         raise AIGenerationError(f"Claude API error: {e}")
     return "".join(block.text for block in response.content if block.type == "text")
@@ -177,11 +186,15 @@ def call_claude(api_key, prompt):
 
 def call_gemini(api_key, prompt):
     url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent"
-    resp = requests.post(
-        url,
-        headers={"x-goog-api-key": api_key, "Content-Type": "application/json"},
-        json={"contents": [{"parts": [{"text": prompt}]}]},
-    )
+    try:
+        resp = requests.post(
+            url,
+            headers={"x-goog-api-key": api_key, "Content-Type": "application/json"},
+            json={"contents": [{"parts": [{"text": prompt}]}]},
+            timeout=AI_TIMEOUT,
+        )
+    except requests.Timeout:
+        raise AIGenerationError(f"Gemini API timed out after {AI_TIMEOUT}s")
     data = resp.json()
     if "error" in data:
         raise AIGenerationError(f"Gemini API error: {data['error'].get('message', data['error'])}")

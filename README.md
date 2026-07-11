@@ -1,5 +1,7 @@
 # flockFront
 
+<img width="608" height="505" alt="image" src="https://github.com/user-attachments/assets/1f59c7da-ed96-4621-a866-4085a1e95214" />
+
 Spin up a themed business website on Cloudflare Workers, live under a domain
 you own, in one command:
 

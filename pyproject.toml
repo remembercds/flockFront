@@ -1,0 +1,29 @@
+[project]
+name = "flockfront"
+version = "0.2.0"
+description = "Spin up themed business websites on Cloudflare Workers for domains you own"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.9"
+dependencies = ["requests"]
+
+[project.optional-dependencies]
+ai = ["anthropic"]
+dev = ["pytest", "ruff"]
+
+[project.urls]
+Homepage = "https://github.com/remembercds/flockFront"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 110
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B"]
+# Long lines here are literal content — the AI prompt text and argparse help
+# strings — where wrapping would change what gets sent or shown.
+ignore = ["E501"]

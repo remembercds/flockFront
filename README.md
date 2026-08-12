@@ -111,7 +111,8 @@ This installs `requests`, the only dependency.
 
 ```
 python flockFront.py <domain>... [-i INDUSTRY] [--ai {claude,gemini}] [--ai-key KEY]
-                                  [--domains-file FILE] [--token TOKEN] [--account-id ACCOUNT_ID]
+                                  [--ai-model MODEL] [--domains-file FILE] [--concurrency N]
+                                  [--token TOKEN] [--account-id ACCOUNT_ID]
 ```
 
 Examples:
@@ -152,6 +153,14 @@ cedar-clinic.org
 
 The Cloudflare account is resolved once; each domain is deployed independently. If one domain fails (e.g. token lacks access to that zone), flockFront prints the error and continues with the rest — it exits with a non-zero status only if at least one domain failed.
 
+Domains are deployed **four at a time** by default. Tune it with `--concurrency N`, or pass `--concurrency 1` to go back to one-at-a-time:
+
+```
+python flockFront.py --domains-file domains.txt -i legal --concurrency 8
+```
+
+Duplicate domains are collapsed, so a name listed twice deploys once. Results print in the order you listed them regardless of which finishes first.
+
 ### Generating the site with AI instead of the templates
 
 Pass `--ai claude` or `--ai gemini` to have the model design the page from scratch — based on the business name derived from the domain and the `--industry` value as a style hint — instead of using the built-in templates:
@@ -169,7 +178,13 @@ Or pass the key directly with `--ai-key` instead of an environment variable.
 - **Claude** uses the official `anthropic` Python SDK — install it with `pip install anthropic` (not included in `requirements.txt` since it's only needed for this flag).
 - **Gemini** talks to the API directly over HTTP — no extra install needed.
 
-If the model's response isn't a complete HTML document (e.g. it refused, or returned something unexpected), flockFront reports an error for that domain instead of deploying broken output.
+Override the model with `--ai-model` if you don't want the defaults (`claude-opus-5` / `gemini-3.5-flash`):
+
+```
+python flockFront.py sunrise-wealth.com --ai claude --ai-model claude-sonnet-5
+```
+
+If the model's response isn't a complete HTML document, flockFront reports an error for that domain instead of deploying broken output. That covers a refusal, an unexpected shape, and — importantly — a response cut off by the output-token limit: a truncated page still contains `<html`, so flockFront also requires a closing `</html>` and checks the provider's stop reason before deploying anything.
 
 ### Previewing without deploying
 
@@ -193,15 +208,37 @@ python flockFront.py --delete sunrise-wealth.com other-domain.com
 
 `--delete` detaches the Workers Custom Domain (if any) and deletes the underlying Worker script for each domain given — this is a real teardown, not reversible. Both flags exit immediately after running and ignore `domain`/`--industry`/`--ai`.
 
+Combine `--delete` with `--dry-run` to see exactly which Worker each domain resolves to, without deleting anything:
+
+```
+python flockFront.py --delete sunrise-wealth.com --dry-run
+Would delete sunrise-wealth.com (worker 'flockfront-sunrise-wealth-com')
+```
+
+## Development
+
+```
+pip install -r requirements.txt
+pip install pytest ruff
+pytest          # unit tests — no network, no Cloudflare account needed
+ruff check .    # lint
+```
+
+The test suite covers the pure logic: domain validation, Worker-name generation, zone-candidate resolution, template rendering across all seven industries, AI-output validation, and the JSON escaping used to embed HTML in the Worker module. CI runs it on Python 3.9, 3.11, and 3.13.
+
 ## Troubleshooting
 
 - **"No Cloudflare zone found" behavior / site ends up on workers.dev
   instead of my domain** — the domain isn't an active zone yet. Re-check
-  step 1 above and re-run once the zone status is `active`.
+  step 1 above and re-run once the zone status is `active`. Subdomains are
+  fine: `shop.example.com` attaches to the `example.com` zone.
 - **"Cloudflare API error ... authentication error"** — your token is
   missing, expired, or scoped to the wrong account/zone. Re-check step 2.
 - **"Token can see multiple accounts"** — set `CLOUDFLARE_ACCOUNT_ID` or pass
   `--account-id` as described in step 3.
 - **Re-running the tool** is safe — it overwrites the same Worker script
   each time (named `flockfront-<domain-with-dashes>`), so running it again
-  with a different `--industry` just redeploys the new template.
+  with a different `--industry` just redeploys the new template. Cloudflare
+  caps script names at 63 characters; for domains long enough to exceed that,
+  the name is shortened and given a short hash of the full domain so two long
+  domains never land on the same Worker.
